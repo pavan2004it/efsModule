@@ -22,3 +22,7 @@ variable "efs_access_point_path" {
   type = string
   default = "/"
 }
+variable "encrypted" {
+  type = bool
+  default = true
+}

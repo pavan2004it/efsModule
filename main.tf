@@ -1,5 +1,6 @@
 resource "aws_efs_file_system" "rp-efs-jobs" {
   throughput_mode = var.throughput_mode
+  encrypted = var.encrypted
   lifecycle_policy {
     transition_to_ia = var.transition_to_ia
   }
