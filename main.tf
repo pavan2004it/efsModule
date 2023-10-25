@@ -1,18 +1,18 @@
 resource "aws_efs_file_system" "rp-efs-jobs" {
-  throughput_mode = "elastic"
+  throughput_mode = var.throughput_mode
   lifecycle_policy {
-    transition_to_ia = "AFTER_90_DAYS"
-    transition_to_primary_storage_class = "AFTER_1_ACCESS"
+    transition_to_ia = var.transition_to_ia
+    transition_to_primary_storage_class = var.transition_out_of_ia
   }
   tags = {
-    Name = "rp-dev-efs"
+    Name = var.efs-name
   }
 }
 
 resource "aws_efs_access_point" "rp-access-point" {
   file_system_id = aws_efs_file_system.rp-efs-jobs.id
   root_directory {
-    path = "/"
+    path = var.efs_access_point_path
   }
 }
 
