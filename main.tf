@@ -1,4 +1,4 @@
-resource "aws_efs_file_system" "rp-efs-jobs" {
+resource "aws_efs_file_system" "efs-fs" {
   throughput_mode = var.throughput_mode
   encrypted = var.encrypted
   lifecycle_policy {
@@ -13,7 +13,7 @@ resource "aws_efs_file_system" "rp-efs-jobs" {
 }
 
 resource "aws_efs_access_point" "rp-access-point" {
-  file_system_id = aws_efs_file_system.rp-efs-jobs.id
+  file_system_id = aws_efs_file_system.efs-fs.id
   root_directory {
     path = var.efs_access_point_path
   }
@@ -21,7 +21,7 @@ resource "aws_efs_access_point" "rp-access-point" {
 
 resource "aws_efs_mount_target" "rp-mount-point" {
   count = length(var.app_subnet)
-  file_system_id = aws_efs_file_system.rp-efs-jobs.id
+  file_system_id = aws_efs_file_system.efs-fs.id
   subnet_id      = var.app_subnet[count.index]
   security_groups = [var.sg-id]
 }
